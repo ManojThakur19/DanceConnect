@@ -1,15 +1,17 @@
 using DanceConnect.Server.Authorization;
 using DanceConnect.Server.DataContext;
 using DanceConnect.Server.Entities;
+using DanceConnect.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IUserService, UserService>();
 // Add services to the container.
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddRoles<IdentityRole>()
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddRoles<IdentityRole<int>>()
                 .AddEntityFrameworkStores<DanceConnectContext>();
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -23,6 +25,15 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 builder.Services.AddConfigureContext(builder.Configuration);
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddControllers();
 
@@ -55,18 +66,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     };
                 });
 
-// Add CORS policy
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigin",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
-        });
-});
-
+ 
 //builder.Services.AddSession(options =>
 //{
 //    options.IdleTimeout = TimeSpan.FromDays(30);
@@ -89,12 +89,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.MapIdentityApi<IdentityUser>();
 
-app.UseCors("AllowSpecificOrigin");
+
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");

@@ -1,6 +1,8 @@
 ﻿using DanceConnect.Server.ApiModel;
 using DanceConnect.Server.Authorization;
 using DanceConnect.Server.Entities;
+using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,16 +10,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace DanceConnect.Server.Controllers
 {
     [ApiController]
-    //[Route("[controller]")]
+    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<IdentityRole<int>> roleManager;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole<int>> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -42,7 +44,7 @@ namespace DanceConnect.Server.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/auth/login")]
         [HttpPost]
         public async Task<IActionResult> LogIn([FromBody] LoginApiModel model)
@@ -129,7 +131,7 @@ namespace DanceConnect.Server.Controllers
         [Route("api/auth/GetAll")]
         public IActionResult GetAllUsers()
         {
-            return Ok(userManager.Users.Where(x => x.UserName != "Prawisti").Select(x => new UserApiModel { Id = x.Id, UserName = x.UserName, PhoneNumber = x.PhoneNumber, Active = x.Active }).ToList());
+            return Ok(userManager.Users.Where(x => x.UserName != "Prawisti").Select(x => new UserApiModel { UserName = x.UserName, PhoneNumber = x.PhoneNumber, Active = x.Active }).ToList());
         }
 
         [AllowAnonymous]

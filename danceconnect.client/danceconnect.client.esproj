@@ -8,7 +8,6 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\danceconnect.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app\common\" />
     <Folder Include="src\app\views\setup\" />
   </ItemGroup>
 </Project>

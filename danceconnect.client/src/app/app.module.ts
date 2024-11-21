@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -12,15 +12,13 @@ import { SharedModule } from './views/shared/shared.module';
 import { HomeComponent } from './views/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { JwtTokenInterceptor } from './common/jwt-token.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    HeaderComponent,
-    FooterComponent,
     HomeComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -31,7 +29,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtTokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

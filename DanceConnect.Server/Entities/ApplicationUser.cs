@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DanceConnect.Server.Entities
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<int>
     {
         public UserType UserType { get; set; } = UserType.User;
         public bool Active { get; set; } = true;
     }
 
-    public class ApplicationRole : IdentityRole
+    public class ApplicationRole : IdentityRole<int>
     {
         
     }

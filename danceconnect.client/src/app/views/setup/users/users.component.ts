@@ -1,8 +1,10 @@
 import { AsyncPipe, DecimalPipe } from '@angular/common';
-import { Component, PipeTransform } from '@angular/core';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from '../user-profile/user.service';
+import { User } from '../user-profile/user';
 interface Country {
   name: string;
   flag: string;
@@ -56,14 +58,26 @@ function search(text: string, pipe: PipeTransform): Country[] {
   styleUrl: './users.component.css',
   providers: [DecimalPipe]
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
   countries$: Observable<Country[]>;
+  users$: User[] = [];
   filter = new FormControl('', { nonNullable: true });
 
-  constructor(pipe: DecimalPipe) {
+  constructor(pipe: DecimalPipe, private _userService : UserService) {
     this.countries$ = this.filter.valueChanges.pipe(
       startWith(''),
       map((text) => search(text, pipe)),
     );
+
+    this._userService.getItems().subscribe(users => {
+      this.users$ = users;
+    })
   }
+
+  ngOnInit() {
+    this._userService.getItems().subscribe(users => {
+      this.users$ = users;
+    })
+  }
+  
 }
