@@ -6,6 +6,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UsersGridComponent } from './users-grid/users-grid.component';
 import { InstructorGridComponent } from './instructor-grid/instructor-grid.component';
 import { InstructorListComponent } from './instructor-list/instructor-list.component';
+import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'instructors',
         component: InstructorListComponent
+      },
+      {
+        path: 'instructor-profile',
+        component: InstructorProfileComponent
       }
     ]
   }

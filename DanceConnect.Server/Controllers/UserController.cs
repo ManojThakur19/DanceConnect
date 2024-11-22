@@ -1,5 +1,6 @@
 ﻿using DanceConnect.Server.Dtos;
 using DanceConnect.Server.Entities;
+using DanceConnect.Server.Response.Dtos;
 using DanceConnect.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,8 +32,25 @@ namespace DanceConnect.Server.Controllers
             }
             var allHeaders = HttpContext.Request.Headers;
             var authHeader = HttpContext.Request.Headers.Authorization;
+
             var users = await _userService.GetAllUsersAsync();
-            return Ok(users);
+
+            var usersResponse = users.Select(x=> new UserResponseDto()
+            {
+                Name = x.Name,
+                Gender = x.Gender,
+                Dob = x.Dob,
+                Phone = x.Phone,
+                Email = x.AppUser?.Email,
+                ProfileStatus = x.ProfileStatus.ToString(),
+                ProfilePic = x.ProfilePic,
+                IdentityDocument = x.IdentityDocument,
+                Street = x.Street,
+                City = x.City,
+                PostalCode = x.PostalCode,
+                Province = x.Province,
+            }).ToList();
+            return Ok(usersResponse);
         }
 
         [HttpGet("{id}")]
@@ -98,6 +116,7 @@ namespace DanceConnect.Server.Controllers
                     Gender = userDto.Gender,
                     Phone = userDto.Phone,
                     Dob = userDto.Dob,
+                    ProfileStatus = Enums.ProfileStatus.ProfileCompleted,
                     ProfilePic = profilePicturePath,
                     IdentityDocument = identityDocumentPath,
                     Street = userDto.Street,

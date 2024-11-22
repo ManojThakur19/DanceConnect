@@ -16,12 +16,12 @@ namespace DanceConnect.Server.Services
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(x=>x.AppUser).ToListAsync();
         }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.Include(x=>x.AppUser).Where(x=>x.UserId == id).FirstAsync();
         }
 
         public async Task<User> AddUserAsync(User user)

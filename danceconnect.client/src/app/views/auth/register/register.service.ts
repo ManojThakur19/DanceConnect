@@ -12,11 +12,7 @@ export class RegisterService {
   }
 
   register(data: any): Observable<any> {
-    //const httpHeaders = new HttpHeaders();
-    //httpHeaders.set('Content-Type', 'application/json');
-
-    console.log('REGISTER', data);
-    return this.http.post<string>(`${UrlHelper.backEndUrl}/api/auth/registration`, data)
+    return this.http.post<string>(`${UrlHelper.backEndUrl}/api/account/registration`, data)
       .pipe(map(res => res as any));
   }
 }

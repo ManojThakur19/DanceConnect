@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using DanceConnect.Server.Enums;
 
 namespace DanceConnect.Server.Entities
 {
@@ -21,6 +22,7 @@ namespace DanceConnect.Server.Entities
         public string? Phone { get; set; }
 
         public decimal HourlyRate { get; set; }
+        public ProfileStatus ProfileStatus { get; set; }
 
         public string? ProfilePic { get; set; }
 

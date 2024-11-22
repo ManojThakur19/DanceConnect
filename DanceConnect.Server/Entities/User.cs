@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DanceConnect.Server.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DanceConnect.Server.Entities
@@ -17,6 +18,8 @@ namespace DanceConnect.Server.Entities
         public string? ProfilePic { get; set; } 
 
         public string? IdentityDocument { get; set; } 
+
+        public ProfileStatus ProfileStatus { get; set; }
 
         [Required]
         public string? Street { get; set; }

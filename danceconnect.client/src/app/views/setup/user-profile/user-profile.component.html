@@ -34,14 +34,14 @@
 
     <!-- Profile Picture Upload Row -->
     <hr class="my-4">
-    <h5>Profile Picture & Video</h5>
+    <h5>Profile Picture & Identity Document</h5>
     <div class="row mt-3">
-      <div class="col-md-6 form-group">
+      <div class="col-md-6 form-group file-upload-group">
         <label for="profilePic">Profile Picture</label>
         <input type="file" class="form-control-file" id="profilePic" formControlName="profilePic" (change)="onProfilePicChange($event)">
       </div>
       <div class="col-md-6 form-group file-upload-group">
-        <label for="identityDocument">Upload File</label>
+        <label for="identityDocument">Identity Document</label>
         <input type="file" class="form-control-file" id="identityDocument" formControlName="identityDocument" (change)="onIdentityDocChange($event)">
       </div>
     </div>

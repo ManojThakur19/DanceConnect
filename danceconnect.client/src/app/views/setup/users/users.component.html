@@ -11,11 +11,14 @@
   <thead>
     <tr>
       <th scope="col">S.N.</th>
+      <th scope="col">Profile</th>
       <th scope="col">Name</th>
       <th scope="col">DOB</th>
       <th scope="col">Gender</th>
       <th scope="col">Phone</th>
       <th scope="col">Email</th>
+      <th scope="col">Status</th>
+      <th scope="col">City</th>
       <th scope="col">Province</th>
       <th scope="col">Actions</th>
     </tr>
@@ -25,16 +28,18 @@
     <tr>
       <th scope="row">{{ i + 1 }}</th>
       <td>
-        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/'"
+        <img [src]="'user.profilePic'"
              [alt]="'The flag of ' + user.name"
              class="me-2"
              style="width: 20px" />
-        <ngb-highlight [result]="user.name" [term]="filter.value" />
       </td>
       <td><ngb-highlight [result]="user.name" [term]="filter.value" /></td>
+      <td><ngb-highlight [result]="user.dob" [term]="filter.value" /></td>
       <td><ngb-highlight [result]="user.gender" [term]="filter.value" /></td>
       <td><ngb-highlight [result]="user.phone" [term]="filter.value" /></td>
-      <td><ngb-highlight [result]="user.phone" [term]="filter.value" /></td>
+      <td><ngb-highlight [result]="user.email" [term]="filter.value" /></td>
+      <td><ngb-highlight [result]="user.profileStatus" [term]="filter.value" /></td>
+      <td><ngb-highlight [result]="user.city" [term]="filter.value" /></td>
       <td><ngb-highlight [result]="user.province" [term]="filter.value" /></td>
       <td>
         <a href="#">Edit</a>

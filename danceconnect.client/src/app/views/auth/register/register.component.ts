@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Register } from './register';
+import { Register, UserType } from './register';
 import { RegisterService } from './register.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
@@ -17,7 +17,14 @@ export class RegisterComponent {
   constructor(public _registerService: RegisterService, public router: Router) { }
 
   register() {
-    this._registerService.register(this.formData)
+    const user: Register = {
+      email : this.formData.email,
+      password : this.formData.password,
+      confirmPassword : this.formData.confirmPassword,
+      userType : parseInt(this.formData.userType.toString()),
+    }
+
+    this._registerService.register(user)
       .pipe(first())
       .subscribe(data => {
 

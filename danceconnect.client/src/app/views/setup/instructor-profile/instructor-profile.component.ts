@@ -22,6 +22,7 @@ export class InstructorProfileComponent {
       gender: ['', Validators.required],
       dob: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      hourlyRate: ['', Validators.required],
       profilePic: [null, Validators.required],
       identityDocument: [null, Validators.required],
       shortIntroVideo: [null, Validators.required],

@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user-profile/user.service';
-import { User } from '../user-profile/user';
+import { User, UserResponse } from '../user-profile/user';
 interface Country {
   name: string;
   flag: string;
@@ -60,7 +60,7 @@ function search(text: string, pipe: PipeTransform): Country[] {
 })
 export class UsersComponent implements OnInit {
   countries$: Observable<Country[]>;
-  users$: User[] = [];
+  users$: UserResponse[] = [];
   filter = new FormControl('', { nonNullable: true });
 
   constructor(pipe: DecimalPipe, private _userService : UserService) {
@@ -69,13 +69,13 @@ export class UsersComponent implements OnInit {
       map((text) => search(text, pipe)),
     );
 
-    this._userService.getItems().subscribe(users => {
+    this._userService.getUsers().subscribe(users => {
       this.users$ = users;
     })
   }
 
   ngOnInit() {
-    this._userService.getItems().subscribe(users => {
+    this._userService.getUsers().subscribe(users => {
       this.users$ = users;
     })
   }

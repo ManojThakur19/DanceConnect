@@ -64,18 +64,16 @@ export class UserProfileComponent {
       if (key === 'profilePic' || key === 'identityDocument' || key === 'introVideo') {
         const file = this.profileForm.get(key)?.value;
         if (file) {
-          console.log("CHECK Files", this.profileForm.get(key)?.value);
           formData.append(key, file);
         }
       } else {
-        console.log("CHECK VALUES", this.profileForm.get(key)?.value);
         formData.append(key, this.profileForm.get(key)?.value);
       }
     });
 
     console.log("Form Data", formData);
 
-    this._userService.uploadUser(formData).subscribe(
+    this._userService.addUser(formData).subscribe(
       (response) => {
         console.log('User successfully uploaded:', response);
       },

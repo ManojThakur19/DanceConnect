@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InstructorService } from '../instructor-profile/instructor.service';
-import { Instructor } from '../instructor-profile/instructor';
+import { Instructor, InstructorResponse } from '../instructor-profile/instructor';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 })
 export class InstructorListComponent implements OnInit {
 
-  instructors: Instructor[] = [];
+  instructors: InstructorResponse[] = [];
   filter = new FormControl('', { nonNullable: true });
   constructor(private _instructorService: InstructorService) { }
 

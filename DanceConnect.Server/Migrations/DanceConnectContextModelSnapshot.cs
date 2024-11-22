@@ -96,6 +96,70 @@ namespace DanceConnect.Server.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("DanceConnect.Server.Entities.Instructor", b =>
+                {
+                    b.Property<int>("InstructorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorId"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Dob")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("IdentityDocument")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IntroVideo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProfileStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("InstructorId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Instructors");
+                });
+
             modelBuilder.Entity("DanceConnect.Server.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -121,9 +185,6 @@ namespace DanceConnect.Server.Migrations
                     b.Property<string>("IdentityDocument")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IntroVideo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -138,6 +199,9 @@ namespace DanceConnect.Server.Migrations
 
                     b.Property<string>("ProfilePic")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProfileStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("Province")
                         .IsRequired()
@@ -285,6 +349,17 @@ namespace DanceConnect.Server.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DanceConnect.Server.Entities.Instructor", b =>
+                {
+                    b.HasOne("DanceConnect.Server.Entities.ApplicationUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("DanceConnect.Server.Entities.User", b =>

@@ -1,7 +1,6 @@
 ﻿using DanceConnect.Server.ApiModel;
 using DanceConnect.Server.Authorization;
 using DanceConnect.Server.Entities;
-using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +26,7 @@ namespace DanceConnect.Server.Controllers
         }
 
         [AllowAnonymous]
-        [Route("api/token")]
+        [Route("token")]
         [HttpGet]
         public async Task<dynamic> Token()
         {
@@ -45,7 +44,7 @@ namespace DanceConnect.Server.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("api/auth/login")]
+        [Route("login")]
         [HttpPost]
         public async Task<IActionResult> LogIn([FromBody] LoginApiModel model)
         {
@@ -90,7 +89,7 @@ namespace DanceConnect.Server.Controllers
         }
 
         [AllowAnonymous]
-        [Route("api/auth/registration")]
+        [Route("registration")]
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterApiModel model)
         {
@@ -128,7 +127,7 @@ namespace DanceConnect.Server.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/auth/GetAll")]
+        [Route("GetAll")]
         public IActionResult GetAllUsers()
         {
             return Ok(userManager.Users.Where(x => x.UserName != "Prawisti").Select(x => new UserApiModel { UserName = x.UserName, PhoneNumber = x.PhoneNumber, Active = x.Active }).ToList());
@@ -136,7 +135,7 @@ namespace DanceConnect.Server.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/auth/GetAllRoles")]
+        [Route("GetAllRoles")]
         public IActionResult GetAllRoles()
         {
             return Ok(roleManager.Roles.Where(x => x.Name != "SuperAdmin").Select(x => new { Id = x.Id, Name = x.Name }).ToList());
@@ -165,7 +164,7 @@ namespace DanceConnect.Server.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("api/auth/reset-password")]
+        [Route("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetApiModel resetViewModel)
         {
             try
